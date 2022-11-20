@@ -18,13 +18,11 @@ async function getContactById(id) {
   try {
     const contacts = await listContacts();
     const result = contacts.find((item) => item.id === id.toString());
-    console.log(result);
     return result;
   } catch (error) {
     console.error(error);
   }
-
-  return contact || null;
+  return contact;
 }
 
 async function removeContact(id) {
@@ -34,7 +32,7 @@ async function removeContact(id) {
   );
   try {
     await fs.writeFile(contactsPath, JSON.stringify(newContacts));
-    console.log(`Contact id: ${id} was successfully deleted!`);
+    console.log(`Contact with id: ${id} was successfully deleted!`);
     const updatedContacts = await listContacts();
     return updatedContacts;
   } catch (error) {
@@ -48,7 +46,7 @@ async function addContact(name, email, phone) {
     const newContact = { id: shortid.generate(), name, email, phone };
     const updateContacts = [...contacts, newContact];
     await fs.writeFile(contactsPath, JSON.stringify(updateContacts));
-    console.log(
+    console.table(
       `New contact: ${name}, email: ${email}, phone: ${phone} = was created!`
     );
     const updatedContacts = await listContacts();
