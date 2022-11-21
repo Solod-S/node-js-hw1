@@ -38,5 +38,11 @@ async function invokeAction({ action, id, name, email, phone }) {
       console.warn("\x1B[31m Unknown action type!");
   }
 }
-
-invokeAction(argv);
+const start = async (argv) => {
+  try {
+    await invokeAction(argv);
+  } catch (error) {
+    console.log(error);
+  }
+};
+start(argv);
